@@ -48,13 +48,19 @@ function calculateFocusReport() {
   const startWindow = now - FOCUS_WINDOW_MS;
 
   const totals = {
-    trabajo: 0, telefono: 0, cliente: 0, estudio: 0, otros: 0
+    trabajo: 0,
+    telefono: 0,
+    cliente: 0,
+    estudio: 0,
+    otros: 0
   };
 
   blocks.forEach(b => {
     const start = Math.max(b.inicio, startWindow);
     const end = Math.min(b.fin ?? now, now);
-    if (end > start) totals[b.actividad] += end - start;
+    if (end > start) {
+      totals[b.actividad] += end - start;
+    }
   });
 
   const totalTime = Object.values(totals).reduce((a, b) => a + b, 0);
@@ -93,7 +99,11 @@ function buildDailyReportText() {
 
   const byClient = {};
   const byActivity = {
-    trabajo: 0, telefono: 0, cliente: 0, estudio: 0, otros: 0
+    trabajo: 0,
+    telefono: 0,
+    cliente: 0,
+    estudio: 0,
+    otros: 0
   };
 
   blocks.forEach(b => {
@@ -133,20 +143,31 @@ function showDailyReport() {
   alert(buildDailyReportText());
 }
 
-// ---------- APERTURA ROBUSTA DE ARCHIVO ----------
+// ---------- ARCHIVO ----------
 
 function openReportInNewTab(text) {
   const blob = new Blob([text], { type: "text/plain;charset=utf-8" });
   const url = URL.createObjectURL(blob);
-
-  // Abrimos en nueva pestaña: Android permite guardar desde ahí
   window.open(url, "_blank");
-
-  // No revocamos inmediatamente para que el navegador lo use
   setTimeout(() => URL.revokeObjectURL(url), 60000);
 }
 
 // ---------- UI ----------
+
+function updateActivityUI() {
+  const { state } = getCurrentState();
+
+  activityButtons.forEach(btn => {
+    btn.classList.remove("active");
+
+    if (
+      state.currentActivity &&
+      btn.dataset.activity === state.currentActivity
+    ) {
+      btn.classList.add("active");
+    }
+  });
+}
 
 function updateUI() {
   const { state, clients } = getCurrentState();
@@ -155,6 +176,10 @@ function updateUI() {
   clientNameEl.textContent = client
     ? `Cliente: ${client.nombre}`
     : "Sin cliente activo";
+
+  activityNameEl.textContent = state.currentActivity
+    ? `Actividad: ${state.currentActivity}`
+    : "Actividad: —";
 
   if (timerInterval) clearInterval(timerInterval);
 
@@ -167,12 +192,21 @@ function updateUI() {
   } else {
     timerEl.textContent = "00:00:00";
   }
+
+  updateActivityUI();
 }
 
 // ---------- EVENTOS ----------
 
 activityButtons.forEach(btn => {
   btn.onclick = () => {
+    const { state } = getCurrentState();
+
+    if (!state.currentClientId) {
+      alert("Primero crea o selecciona un cliente.");
+      return;
+    }
+
     changeActivity(btn.dataset.activity);
     updateUI();
   };
@@ -189,10 +223,13 @@ document.getElementById("newClient").onclick = () => {
 document.getElementById("changeClient").onclick = () => {
   const { clients } = getCurrentState();
   const open = clients.filter(c => c.estado === "abierto");
-  if (!open.length) return;
+  if (!open.length) {
+    alert("No hay clientes abiertos.");
+    return;
+  }
 
   let m = "Cliente:\n";
-  open.forEach((c, i) => m += `${i+1}. ${c.nombre}\n`);
+  open.forEach((c, i) => m += `${i + 1}. ${c.nombre}\n`);
   const s = parseInt(prompt(m), 10) - 1;
   if (open[s]) {
     changeClient(open[s].id);
