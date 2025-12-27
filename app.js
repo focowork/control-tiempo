@@ -108,8 +108,6 @@ document.getElementById("newClient").onclick = () => {
   if (!n) return;
 
   newClient(n.trim());
-
-  // Comenzamos SIEMPRE en Trabajo y marcado
   changeActivity("trabajo");
   selectActivity("trabajo");
   updateUI("trabajo");
@@ -126,8 +124,6 @@ document.getElementById("changeClient").onclick = () => {
   if (!open[sel]) return;
 
   changeClient(open[sel].id);
-
-  // Al cambiar de cliente, arrancamos en Trabajo
   changeActivity("trabajo");
   selectActivity("trabajo");
   updateUI("trabajo");
@@ -139,7 +135,7 @@ document.getElementById("closeClient").onclick = () => {
   updateUI(null);
 };
 
-/* ===== 🎯 ENFOQUE ===== */
+/* ===== 🎯 ENFOQUE (SOLO REPORTE, SIN AVISOS AUTOMÁTICOS) ===== */
 if (focusBtn) {
   focusBtn.onclick = () => {
     const { blocks } = getCurrentState();
@@ -179,7 +175,7 @@ if (focusBtn) {
   };
 }
 
-/* ===== 📅 HOY (TXT) ===== */
+/* ===== 📅 HOY (TXT DESCARGA DIRECTA) ===== */
 if (todayBtn) {
   todayBtn.onclick = () => {
     const { blocks, clients } = getCurrentState();
@@ -204,15 +200,22 @@ if (todayBtn) {
         (byClient[client.nombre] || 0) + (e - s);
     });
 
-    let txt = `REPORTE ${now.toLocaleDateString()}\n\n`;
+    let txt = `REPORTE DIARIO - FocoWork\n${now.toLocaleDateString()}\n\n`;
     Object.entries(byClient).forEach(([n, t]) => {
       txt += `${n}: ${formatTime(t)}\n`;
     });
 
     const blob = new Blob([txt], { type: "text/plain;charset=utf-8" });
     const url = URL.createObjectURL(blob);
-    window.open(url, "_blank");
-    setTimeout(() => URL.revokeObjectURL(url), 60000);
+
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `focowork-${now.toISOString().slice(0,10)}.txt`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
   };
 }
 
