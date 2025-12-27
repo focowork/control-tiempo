@@ -6,6 +6,7 @@
   <title>Control de Tiempo</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
+
 <body>
   <header>
     <div id="clientName">Sin cliente activo</div>
@@ -22,12 +23,17 @@
   </main>
 
   <footer>
-    <button id="focusReport">🎯 Enfoque</button>
-    <button id="newClient">➕ Nuevo cliente</button>
-    <button id="changeClient">🔁 Cambiar cliente</button>
-    <button id="closeClient">✅ Cerrar cliente</button>
+    <div class="footer-row">
+      <button id="newClient">➕ Nuevo</button>
+      <button id="changeClient">🔁 Cambiar</button>
+      <button id="closeClient">✅ Cerrar</button>
+    </div>
+
+    <div class="footer-row">
+      <button id="focusReport" class="focus-btn">🎯 Enfoque</button>
+    </div>
   </footer>
 
   <script type="module" src="app.js"></script>
 </body>
-</html>
+  </html>
