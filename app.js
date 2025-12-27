@@ -12,8 +12,9 @@ const timerEl = document.getElementById("timer");
 const activityButtons = document.querySelectorAll(".activity");
 
 let timerInterval = null;
+const FOCUS_WINDOW_MS = 90 * 60 * 1000;
 
-// -------- UTIL --------
+// ---------- UTIL ----------
 
 function formatTime(ms) {
   const s = Math.floor(ms / 1000);
@@ -23,7 +24,7 @@ function formatTime(ms) {
   return `${h}:${m}:${sec}`;
 }
 
-// -------- TOTAL CLIENTE --------
+// ---------- TOTAL CLIENTE ----------
 
 function calculateClientTotal(clientId) {
   const { blocks } = getCurrentState();
@@ -39,7 +40,7 @@ function calculateClientTotal(clientId) {
   return total;
 }
 
-// -------- UI --------
+// ---------- UI ----------
 
 function updateUI() {
   const { state, clients } = getCurrentState();
@@ -66,15 +67,16 @@ function updateUI() {
   }
 }
 
-// -------- EVENTOS --------
+// ---------- ACTIVIDADES ----------
 
-// BOTONES ACTIVIDAD (SOLO CAMBIAN TIEMPO)
 activityButtons.forEach(btn => {
   btn.onclick = () => {
     changeActivity(btn.dataset.activity);
     updateUI();
   };
 });
+
+// ---------- CLIENTES ----------
 
 document.getElementById("newClient").onclick = () => {
   const n = prompt("Nombre cliente:");
@@ -101,6 +103,68 @@ document.getElementById("changeClient").onclick = () => {
 document.getElementById("closeClient").onclick = () => {
   closeClient();
   updateUI();
+};
+
+// ---------- ENFOQUE ----------
+
+document.getElementById("focusBtn").onclick = () => {
+  const { blocks } = getCurrentState();
+  const now = Date.now();
+  const start = now - FOCUS_WINDOW_MS;
+
+  const totals = {
+    trabajo: 0, telefono: 0, cliente: 0, estudio: 0, otros: 0
+  };
+
+  blocks.forEach(b => {
+    const s = Math.max(b.inicio, start);
+    const e = Math.min(b.fin ?? now, now);
+    if (e > s) totals[b.actividad] += e - s;
+  });
+
+  const total = Object.values(totals).reduce((a, b) => a + b, 0);
+  const pct = total ? Math.round((totals.trabajo / total) * 100) : 0;
+
+  alert(
+    `🎯 Enfoque (90 min)\n\n` +
+    Object.entries(totals)
+      .map(([k, v]) => `${k}: ${formatTime(v)}`)
+      .join("\n") +
+    `\n\nTrabajo: ${pct}%`
+  );
+};
+
+// ---------- REPORTE HOY (TXT) ----------
+
+document.getElementById("todayBtn").onclick = () => {
+  const { blocks, clients } = getCurrentState();
+  const now = new Date();
+  const startDay = new Date(
+    now.getFullYear(), now.getMonth(), now.getDate()
+  ).getTime();
+
+  const byClient = {};
+
+  blocks.forEach(b => {
+    const s = Math.max(b.inicio, startDay);
+    const e = Math.min(b.fin ?? Date.now(), Date.now());
+    if (e <= s) return;
+
+    const c = clients.find(x => x.id === b.cliente_id);
+    if (!c) return;
+
+    byClient[c.nombre] =
+      (byClient[c.nombre] || 0) + (e - s);
+  });
+
+  let txt = `REPORTE ${now.toLocaleDateString()}\n\n`;
+  Object.entries(byClient).forEach(([n, t]) => {
+    txt += `${n}: ${formatTime(t)}\n`;
+  });
+
+  const blob = new Blob([txt], { type: "text/plain" });
+  const url = URL.createObjectURL(blob);
+  window.open(url, "_blank");
 };
 
 updateUI();
