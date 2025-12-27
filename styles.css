@@ -1,81 +1,139 @@
-body {
+/* ---------- RESET BÁSICO ---------- */
+
+* {
+  box-sizing: border-box;
   margin: 0;
-  font-family: system-ui, sans-serif;
-  background: #111;
-  color: #fff;
+  padding: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
-/* ---------- HEADER ---------- */
+body {
+  background-color: #f4f6f8;
+  color: #222;
+  padding: 12px;
+}
+
+/* ---------- LAYOUT ---------- */
 
 header {
-  padding: 16px;
   text-align: center;
-  border-bottom: 1px solid #333;
+  margin-bottom: 12px;
 }
 
 #clientName {
-  font-size: 1.2rem;
-  font-weight: bold;
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 4px;
 }
 
 #activityName {
-  margin-top: 4px;
-  color: #aaa;
+  font-size: 14px;
+  color: #555;
 }
 
 #timer {
-  font-size: 2.4rem;
-  margin-top: 8px;
+  font-size: 32px;
+  font-weight: bold;
+  margin: 12px 0;
 }
 
-/* ---------- ACTIVIDADES ---------- */
+/* ---------- CONTENEDOR PRINCIPAL ---------- */
 
 main {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-  padding: 16px;
-}
-
-button {
-  font-size: 1.1rem;
-  padding: 18px;
-  border: none;
-  border-radius: 14px;
-  cursor: pointer;
-}
-
-button.activity {
-  background: #222;
-  color: #fff;
-}
-
-button.activity.active {
-  background: #0a84ff;
-}
-
-/* ---------- FOOTER ---------- */
-
-footer {
-  padding: 12px;
-  border-top: 1px solid #333;
   display: flex;
   flex-direction: column;
+  gap: 12px;
+}
+
+/* ---------- BOTONES DE ACTIVIDAD ---------- */
+
+.activities {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
   gap: 10px;
 }
 
-.footer-row {
-  display: flex;
-  gap: 8px;
+.activity {
+  background-color: #0d6efd;
+  color: #ffffff;
+  border: none;
+  border-radius: 14px;
+  padding: 16px 10px;
+  font-size: 15px;
+  font-weight: 500;
+  text-align: center;
+  cursor: pointer;
+  user-select: none;
+  transition: background-color 0.15s ease;
 }
 
-.footer-row button {
-  flex: 1;
-  background: #333;
-  color: #fff;
+.activity:active {
+  transform: scale(0.97);
 }
 
-.focus-btn {
-  background: #444;
-  font-weight: bold;
+/* ACTIVIDAD ACTIVA */
+.activity.active {
+  background-color: #0a58ca;
+}
+
+/* ---------- BOTONES INFERIORES ---------- */
+
+.actions {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.action {
+  background-color: #ffffff;
+  color: #0d6efd;
+  border: 2px solid #0d6efd;
+  border-radius: 14px;
+  padding: 14px 10px;
+  font-size: 14px;
+  font-weight: 500;
+  text-align: center;
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.action:active {
+  background-color: #0d6efd;
+  color: #ffffff;
+}
+
+/* ---------- FOOTER / REPORTES ---------- */
+
+footer {
+  margin-top: 12px;
+}
+
+.reports {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.report {
+  background-color: #eeeeee;
+  color: #333;
+  border-radius: 14px;
+  padding: 14px 10px;
+  font-size: 14px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.report:active {
+  background-color: #dddddd;
+}
+
+/* ---------- RESPONSIVE EXTRA ---------- */
+
+@media (min-width: 600px) {
+  body {
+    max-width: 420px;
+    margin: auto;
   }
+    }
