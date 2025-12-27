@@ -9,29 +9,41 @@
 
 <body>
 
+  <!-- ===== HEADER ===== -->
   <header>
     <div id="clientName">Sin cliente activo</div>
+    <div id="activityName">—</div>
     <div id="timer">00:00:00</div>
   </header>
 
+  <!-- ===== ACTIVIDADES ===== -->
   <main>
-
-    <div class="activities">
-      <button class="activity" data-activity="trabajo">Trabajo</button>
-      <button class="activity" data-activity="telefono">Teléfono</button>
-      <button class="activity" data-activity="cliente">Cliente</button>
-      <button class="activity" data-activity="estudio">Estudio</button>
-      <button class="activity" data-activity="otros">Otros</button>
-    </div>
-
-    <div class="actions">
-      <button id="newClient" class="action">➕ Nuevo</button>
-      <button id="changeClient" class="action">🔁 Cambiar</button>
-      <button id="closeClient" class="action">✅ Cerrar</button>
-    </div>
-
+    <button class="activity" data-activity="trabajo">🟦 Trabajo</button>
+    <button class="activity" data-activity="telefono">📞 Teléfono</button>
+    <button class="activity" data-activity="cliente">👥 Cliente</button>
+    <button class="activity" data-activity="estudio">📖 Estudio</button>
+    <button class="activity" data-activity="otros">⚙️ Otros</button>
   </main>
 
+  <!-- ===== FOOTER ===== -->
+  <footer>
+
+    <div class="footer-row">
+      <button id="newClient">➕ Nuevo</button>
+      <button id="changeClient">🔁 Cambiar</button>
+      <button id="closeClient">✅ Cerrar</button>
+    </div>
+
+    <div class="footer-row">
+      <button id="focusReport" class="focus-btn">🎯 Enfoque</button>
+      <button id="dailyReport" class="focus-btn">📅 Hoy</button>
+      <button id="dailyPdf" class="focus-btn">📄 PDF</button>
+    </div>
+
+  </footer>
+
+  <!-- ===== SCRIPT ===== -->
   <script type="module" src="app.js"></script>
+
 </body>
   </html>
