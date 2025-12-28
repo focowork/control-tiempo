@@ -237,20 +237,29 @@ document.addEventListener("DOMContentLoaded", () => {
 
       txt += `\nTOTAL: ${formatTime(totalDay)}\n`;
 
-      const blob = new Blob([txt], { type: "text/plain;charset=utf-8" });
-      const url = URL.createObjectURL(blob);
+      const blob = new Blob(
+  [txt],
+  { type: "text/plain; charset=UTF-8" }
+);
 
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = `focowork-${safeName(WORKER_NAME)}-${now
-        .toISOString()
-        .slice(0, 10)}.txt`;
+const filename =
+  `focowork-${safeName(WORKER_NAME)}-${now
+    .toISOString()
+    .slice(0, 10)}.txt`;
 
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
+const a = document.createElement("a");
+a.setAttribute("href", URL.createObjectURL(blob));
+a.setAttribute("download", filename);
 
-      setTimeout(() => URL.revokeObjectURL(url), 1000);
+// Forzar descarga real (Android / PWA)
+a.style.display = "none";
+document.body.appendChild(a);
+a.click();
+
+setTimeout(() => {
+  URL.revokeObjectURL(a.href);
+  document.body.removeChild(a);
+}, 200);
     });
   }
 
