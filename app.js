@@ -42,6 +42,10 @@ document.addEventListener("DOMContentLoaded", () => {
   const activityNameEl = document.getElementById("activityName");
   const timerEl = document.getElementById("timer");
   const activityButtons = document.querySelectorAll(".activity");
+  const closeSummaryEl = document.getElementById("closeSummary");
+  const summaryClientEl = document.getElementById("summaryClient");
+  const summaryTimeEl = document.getElementById("summaryTime");
+
 
   const focusBtn =
     document.getElementById("focusBtn") ||
@@ -53,6 +57,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
   let timerInterval = null;
   const FOCUS_WINDOW_MS = 90 * 60 * 1000;
+
+  function showCloseSummary(clientName, totalMs) {
+  summaryClientEl.textContent = clientName;
+  summaryTimeEl.textContent = formatTime(totalMs);
+  closeSummaryEl.classList.remove("hidden");
+ }
+
+  function hideCloseSummary() {
+   closeSummaryEl.classList.add("hidden");
+ }
+
 
   /* ===== UTIL ===== */
   function formatTime(ms) {
@@ -129,6 +144,39 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   /* ===== CLIENTES ===== */
+  document.getElementById("closeClient")?.addEventListener("click", () => {
+    const { state, clients } = getCurrentState();
+    const client = clients.find(c => c.id === state.currentClientId);
+    if (!client) return;
+
+    const total = calculateClientTotal(client.id);
+
+    closeClient();
+    clearSelection();
+    updateUI(null);
+
+    showCloseSummary(client.nombre, total);
+  });
+
+  document.getElementById("changeClient")?.addEventListener("click", () => {
+   const { clients } = getCurrentState();
+   const open = clients.filter(c => c.estado === "abierto");
+   if (!open.length) return;
+
+   let txt = "Cliente:\n";
+   open.forEach((c, i) => (txt += `${i + 1}. ${c.nombre}\n`));
+   const sel = parseInt(prompt(txt), 10) - 1;
+   if (!open[sel]) return;
+
+   changeClient(open[sel].id);
+   changeActivity("trabajo");
+   selectActivity("trabajo");
+   updateUI("trabajo");
+
+   hideCloseSummary();
+ });
+
+
   document.getElementById("newClient")?.addEventListener("click", () => {
     const n = prompt("Nombre cliente:");
     if (!n) return;
@@ -137,29 +185,10 @@ document.addEventListener("DOMContentLoaded", () => {
     changeActivity("trabajo");
     selectActivity("trabajo");
     updateUI("trabajo");
+  
+    hideCloseSummary();
   });
 
-  document.getElementById("changeClient")?.addEventListener("click", () => {
-    const { clients } = getCurrentState();
-    const open = clients.filter(c => c.estado === "abierto");
-    if (!open.length) return;
-
-    let txt = "Cliente:\n";
-    open.forEach((c, i) => (txt += `${i + 1}. ${c.nombre}\n`));
-    const sel = parseInt(prompt(txt), 10) - 1;
-    if (!open[sel]) return;
-
-    changeClient(open[sel].id);
-    changeActivity("trabajo");
-    selectActivity("trabajo");
-    updateUI("trabajo");
-  });
-
-  document.getElementById("closeClient")?.addEventListener("click", () => {
-    closeClient();
-    clearSelection();
-    updateUI(null);
-  });
 
   /* ===== 🎯 ENFOQUE (90 MIN – REAL) ===== */
   if (focusBtn) {
