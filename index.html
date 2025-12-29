@@ -1,60 +1,53 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Control de Tiempo</title>
-  <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FocoWork</title>
+
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="styles.css" />
+
+  <!-- ICONO -->
+  <link rel="icon" href="icons/icon-192.png">
 </head>
 
 <body>
+  <div class="app">
 
-  <header>
-    <div id="clientName">Sin cliente activo</div>
-    <div id="activityName">—</div>
-    <div id="timer">00:00:00</div>
-  </header>
+    <div class="header">
+      <h2 id="clientName">Sin cliente activo</h2>
+      <div id="activityName">—</div>
+      <div id="timer">00:00:00</div>
+    </div>
 
-  <main>
-
-    <div class="activities">
-      <button class="activity trabajo" data-activity="trabajo">🟦 Trabajo</button>
+    <!-- ACTIVIDADES -->
+    <div class="grid activities">
+      <button class="activity selected" data-activity="trabajo">🟦 Trabajo</button>
       <button class="activity" data-activity="telefono">📞 Teléfono</button>
       <button class="activity" data-activity="cliente">👥 Cliente</button>
       <button class="activity" data-activity="estudio">📘 Visitando</button>
       <button class="activity" data-activity="otros">⚙️ Otros</button>
     </div>
-<div class="buttons">
-  <!-- botones superiores -->
-</div>
 
-<div class="buttons bottom">
-  <!-- botones inferiores -->
-</div>
-<!-- Panel resumen cierre cliente -->
-<div id="closeSummary" class="close-summary hidden">
-  <div class="summary-title">Cliente cerrado</div>
-  <div class="summary-body">
-    <div><strong>Cliente:</strong> <span id="summaryClient">—</span></div>
-    <div><strong>Tiempo total:</strong> <span id="summaryTime">00:00:00</span></div>
-  </div>
-  <div class="summary-footer">✔ Tiempo listo para facturación</div>
-</div>
-
-
-    <div class="actions">
+    <!-- ACCIONES -->
+    <div class="grid actions">
       <button id="newClient">➕ Nuevo</button>
-      <button id="changeClient">🔁 Cambiar</button>
+      <button id="changeClient">🔄 Cambiar</button>
       <button id="closeClient">✅ Cerrar</button>
     </div>
 
-    <div class="reports">
+    <!-- INFORMES -->
+    <div class="grid reports">
       <button id="focusBtn">🎯 Enfoque</button>
       <button id="todayBtn">📅 Hoy</button>
     </div>
 
-  </main>
+    <!-- PANEL INFERIOR -->
+    <div id="statusPanel" class="panel hidden"></div>
+
+  </div>
 
   <script type="module" src="app.js"></script>
 </body>
-    </html>
+</html>
