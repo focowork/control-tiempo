@@ -123,3 +123,9 @@ header {
   color: #2e7d32;
   font-weight: 500;
 }
+
+.summary-footer {
+  margin-top: 8px;
+  color: #2e7d32;
+  font-weight: 500;
+}
