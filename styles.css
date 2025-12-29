@@ -93,3 +93,57 @@ button.selected {
   color: #4caf50;
   margin-top: 6px;
   }
+/* CONTENEDOR GENERAL */
+.app {
+  max-width: 420px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* SECCIONES */
+.activities,
+.clients,
+.tools {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-bottom: 18px; /* 👈 ESTO ES CLAVE */
+}
+
+/* BOTONES GENERALES */
+button {
+  padding: 14px;
+  border-radius: 14px;
+  border: none;
+  background: #2c2c2c;
+  color: #fff;
+  font-size: 16px;
+}
+
+/* BOTÓN ACTIVIDAD SELECCIONADA */
+button.activity.selected {
+  background: #0a84ff;
+}
+
+/* TIMER */
+.timer {
+  font-size: 48px;
+  font-weight: bold;
+  text-align: center;
+  margin: 16px 0 22px 0;
+}
+
+/* PANEL CLIENTE CERRADO */
+.close-panel {
+  margin-top: 22px;
+  padding: 16px;
+  border-radius: 14px;
+  background: #1f1f1f;
+  border-left: 4px solid #2ecc71;
+  color: #fff;
+}
+
+.close-panel .ok {
+  color: #2ecc71;
+  font-weight: bold;
+}
