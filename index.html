@@ -3,51 +3,56 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>FocoWork</title>
+  <title>FocoWork – Control de Tiempo</title>
 
-  <link rel="manifest" href="manifest.json">
+  <!-- CSS -->
   <link rel="stylesheet" href="styles.css" />
 
-  <!-- ICONO -->
+  <!-- PWA -->
   <link rel="icon" href="icons/icon-192.png">
+  <meta name="theme-color" content="#000000">
 </head>
 
 <body>
-  <div class="app">
+  <main class="app">
 
-    <div class="header">
-      <h2 id="clientName">Sin cliente activo</h2>
+    <!-- ===== CABECERA ===== -->
+    <header class="header">
+      <h1 id="clientName">Sin cliente activo</h1>
       <div id="activityName">—</div>
       <div id="timer">00:00:00</div>
-    </div>
+    </header>
 
-    <!-- ACTIVIDADES -->
-    <div class="grid activities">
-      <button class="activity selected" data-activity="trabajo">🟦 Trabajo</button>
+    <!-- ===== ACTIVIDADES ===== -->
+    <section class="activities">
+      <button class="activity" data-activity="trabajo">🟦 Trabajo</button>
       <button class="activity" data-activity="telefono">📞 Teléfono</button>
       <button class="activity" data-activity="cliente">👥 Cliente</button>
       <button class="activity" data-activity="estudio">📘 Visitando</button>
       <button class="activity" data-activity="otros">⚙️ Otros</button>
-    </div>
+    </section>
 
-    <!-- ACCIONES -->
-    <div class="grid actions">
+    <!-- ===== CLIENTES ===== -->
+    <section class="clients">
       <button id="newClient">➕ Nuevo</button>
-      <button id="changeClient">🔄 Cambiar</button>
+      <button id="changeClient">🔁 Cambiar</button>
       <button id="closeClient">✅ Cerrar</button>
-    </div>
+    </section>
 
-    <!-- INFORMES -->
-    <div class="grid reports">
-      <button id="focusBtn">🎯 Enfoque</button>
-      <button id="todayBtn">📅 Hoy</button>
-    </div>
+    <!-- ===== REPORTES ===== -->
+    <section class="reports">
+      <button id="focusReport">🎯 Enfoque</button>
+      <button id="dailyReport">📅 Hoy</button>
+    </section>
 
-    <!-- PANEL INFERIOR -->
-    <div id="statusPanel" class="panel hidden"></div>
+    <!-- ===== PANEL INFERIOR (SIEMPRE ABAJO) ===== -->
+    <section id="infoPanel" class="info-panel hidden">
+      <div id="infoContent"></div>
+    </section>
 
-  </div>
+  </main>
 
+  <!-- JS -->
   <script type="module" src="app.js"></script>
 </body>
 </html>
