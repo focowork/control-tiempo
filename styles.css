@@ -1,67 +1,52 @@
 * {
   box-sizing: border-box;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
 body {
   margin: 0;
-  background: radial-gradient(circle at top, #222, #000);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  background: radial-gradient(circle at top, #2b2b2b, #0f0f0f);
   color: #fff;
 }
 
+/* ===== CONTENEDOR PRINCIPAL ===== */
 .app {
   max-width: 420px;
-  margin: auto;
-  padding: 16px;
+  margin: 0 auto;
+  padding: 18px 16px 28px;
 }
 
-.header {
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-#clientName {
+/* ===== CABECERA ===== */
+h1 {
+  margin: 8px 0 6px;
   font-size: 22px;
-  font-weight: 600;
+  text-align: center;
 }
 
-#activityName {
-  opacity: 0.7;
-  margin-top: 4px;
+.subtitle {
+  text-align: center;
+  opacity: 0.6;
+  margin-bottom: 10px;
 }
 
-#timer {
+/* ===== TIMER ===== */
+.timer {
+  text-align: center;
   font-size: 46px;
-  font-weight: bold;
-  margin-top: 10px;
+  font-weight: 700;
+  margin: 10px 0 22px;
 }
 
-.grid {
-  display: grid;
-  gap: 12px;
-  margin-bottom: 14px;
-}
-
-.activities {
-  grid-template-columns: repeat(2, 1fr);
-}
-
-.actions {
-  grid-template-columns: repeat(3, 1fr);
-}
-
-.reports {
-  grid-template-columns: repeat(2, 1fr);
-}
-
+/* ===== BOTONES BASE ===== */
 button {
-  background: #2d2d2d;
+  background: #2b2b2b;
   color: #fff;
   border: none;
-  border-radius: 14px;
-  padding: 14px;
+  border-radius: 18px;
+  padding: 16px 14px;
   font-size: 16px;
   cursor: pointer;
+  transition: background 0.2s ease, transform 0.1s ease;
 }
 
 button:active {
@@ -69,81 +54,63 @@ button:active {
 }
 
 button.selected {
-  background: linear-gradient(135deg, #1e88ff, #42a5f5);
-}
-
-.info-panel {
-  margin-top: 16px;
-  padding: 14px;
-  background: #111;
-  border-left: 5px solid #4caf50;
-  border-radius: 12px;
-}
-
-.info-panel.hidden {
-  display: none;
-}
-
-#infoTitle {
-  font-weight: bold;
-  margin-bottom: 6px;
-}
-
-.ok {
-  color: #4caf50;
-  margin-top: 6px;
-  }
-/* CONTENEDOR GENERAL */
-.app {
-  max-width: 420px;
-  margin: 0 auto;
-  padding: 20px;
-}
-
-/* SECCIONES */
-.activities,
-.clients,
-.tools {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 12px;
-  margin-bottom: 18px; /* 👈 ESTO ES CLAVE */
-}
-
-/* BOTONES GENERALES */
-button {
-  padding: 14px;
-  border-radius: 14px;
-  border: none;
-  background: #2c2c2c;
-  color: #fff;
-  font-size: 16px;
-}
-
-/* BOTÓN ACTIVIDAD SELECCIONADA */
-button.activity.selected {
   background: #0a84ff;
 }
 
-/* TIMER */
-.timer {
-  font-size: 48px;
-  font-weight: bold;
-  text-align: center;
-  margin: 16px 0 22px 0;
+/* ===== ACTIVIDADES ===== */
+.activities {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-bottom: 22px;
 }
 
-/* PANEL CLIENTE CERRADO */
+.activities .otros {
+  grid-column: 1 / -1;
+}
+
+/* ===== CLIENTES ===== */
+.clients {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-bottom: 22px;
+}
+
+/* ===== TOOLS ===== */
+.tools {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-bottom: 22px;
+}
+
+/* ===== PANEL CLIENTE CERRADO ===== */
 .close-panel {
-  margin-top: 22px;
+  margin-top: 18px;
   padding: 16px;
-  border-radius: 14px;
+  border-radius: 16px;
   background: #1f1f1f;
   border-left: 4px solid #2ecc71;
-  color: #fff;
+}
+
+.close-panel h3 {
+  margin: 0 0 6px;
+  font-size: 16px;
+}
+
+.close-panel p {
+  margin: 4px 0;
+  font-size: 14px;
 }
 
 .close-panel .ok {
   color: #2ecc71;
-  font-weight: bold;
+  font-weight: 600;
+  margin-top: 6px;
 }
+
+/* ===== OCULTO ===== */
+.hidden {
+  display: none;
+  }
