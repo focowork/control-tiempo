@@ -1,107 +1,12 @@
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  font-family: system-ui, sans-serif;
-}
-
-body {
-  background: #111;
-  color: #fff;
-  padding: 14px;
-}
-
-header {
-  text-align: center;
-  margin-bottom: 14px;
-}
-
-#clientName {
-  font-size: 18px;
-  font-weight: 600;
-}
-
-#activityName {
-  font-size: 14px;
-  opacity: 0.7;
-  margin-top: 4px;
-}
-
-#timer {
-  font-size: 36px;
-  font-weight: bold;
-  margin-top: 10px;
-}
-
-.activities {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
-  margin-top: 16px;
-}
-
-/* BOTONES BASE */
-.activity {
-  background-color: #0d6efd;
-  color: #ffffff;
-  border: none;
-  border-radius: 16px;
-  padding: 16px 10px;
-  font-size: 15px;
-  cursor: pointer;
-  transition: background-color 0.15s ease, transform 0.1s ease;
-}
-
-/* feedback táctil */
-.activity:active {
-  transform: scale(0.97);
-}
-
-/* BOTÓN SELECCIONADO */
-.activity.selected {
-  background-color: #0a58ca;
-}
-
-/* ACCIONES */
-.actions {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
-  margin-top: 16px;
-}
-
-.actions button {
-  background: #222;
-  color: #fff;
-  border: none;
-  border-radius: 14px;
-  padding: 14px 8px;
-  font-size: 14px;
-  cursor: pointer;
-}
-
-/* REPORTES */
-.reports {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 10px;
-  margin-top: 16px;
-}
-
-.reports button {
-  background: #222;
-  color: #fff;
-  border: none;
-  border-radius: 14px;
-  padding: 14px 8px;
-  font-size: 14px;
-  cursor: pointer;
-}
+/* ===== Panel resumen cierre cliente ===== */
 .close-summary {
-  margin-top: 12px;
-  padding: 14px;
-  background: #f4f6fa;
-  border-top: 2px solid #d0d7ff;
+  width: 100%;
+  box-sizing: border-box;
+  margin-top: 16px;
+  padding: 14px 16px;
+  background: #f2f4f8;
+  border-top: 2px solid #c7d2ff;
+  color: #1a1a1a;
   font-size: 14px;
 }
 
@@ -112,16 +17,12 @@ header {
 .summary-title {
   font-weight: 600;
   margin-bottom: 8px;
+  color: #0b3d91;
 }
 
 .summary-body div {
   margin-bottom: 4px;
-}
-
-.summary-footer {
-  margin-top: 8px;
-  color: #2e7d32;
-  font-weight: 500;
+  color: #1a1a1a;
 }
 
 .summary-footer {
