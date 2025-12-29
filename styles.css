@@ -1,110 +1,95 @@
-/* ===== RESET ===== */
 * {
   box-sizing: border-box;
-  margin: 0;
-  padding: 0;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
 body {
-  background: #0b0b0b;
-  color: #ffffff;
-  min-height: 100vh;
+  margin: 0;
+  background: radial-gradient(circle at top, #222, #000);
+  color: #fff;
 }
 
-/* ===== CONTENEDOR APP ===== */
 .app {
   max-width: 420px;
-  margin: 0 auto;
+  margin: auto;
   padding: 16px;
 }
 
-/* ===== CABECERA ===== */
 .header {
   text-align: center;
-  margin-bottom: 24px;
+  margin-bottom: 20px;
 }
 
 #clientName {
-  font-size: 20px;
+  font-size: 22px;
   font-weight: 600;
-  margin-bottom: 6px;
 }
 
 #activityName {
   opacity: 0.7;
-  margin-bottom: 12px;
+  margin-top: 4px;
 }
 
 #timer {
-  font-size: 48px;
-  font-weight: 700;
-  letter-spacing: 1px;
+  font-size: 46px;
+  font-weight: bold;
+  margin-top: 10px;
 }
 
-/* ===== BOTONES GENERALES ===== */
-button {
-  background: #2a2a2a;
-  border: none;
-  color: white;
-  padding: 14px 12px;
-  border-radius: 14px;
-  font-size: 16px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
+.grid {
+  display: grid;
+  gap: 12px;
+  margin-bottom: 14px;
 }
 
-/* ===== ACTIVIDADES (3 + 2) ===== */
 .activities {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
-  margin-top: 24px;
-}
-
-.activities .activity:nth-child(4),
-.activities .activity:nth-child(5) {
-  grid-column: span 1;
-}
-
-.activity.selected {
-  background: #0d6efd;
-}
-
-/* ===== CLIENTES (3 botones) ===== */
-.clients {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
-  margin-top: 18px;
-}
-
-/* ===== REPORTES (2 botones) ===== */
-.reports {
-  display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 12px;
-  margin-top: 18px;
 }
 
-/* ===== PANEL INFERIOR ===== */
-.info-panel {
-  margin-top: 20px;
-  padding: 14px;
-  background: #1b1b1b;
+.actions {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.reports {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+button {
+  background: #2d2d2d;
+  color: #fff;
+  border: none;
   border-radius: 14px;
-  border-left: 6px solid #2ecc71;
-  font-size: 14px;
-  line-height: 1.4;
+  padding: 14px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+button:active {
+  transform: scale(0.97);
+}
+
+button.selected {
+  background: linear-gradient(135deg, #1e88ff, #42a5f5);
+}
+
+.info-panel {
+  margin-top: 16px;
+  padding: 14px;
+  background: #111;
+  border-left: 5px solid #4caf50;
+  border-radius: 12px;
 }
 
 .info-panel.hidden {
   display: none;
 }
 
-.info-panel .ok {
-  color: #2ecc71;
-  font-weight: 600;
+#infoTitle {
+  font-weight: bold;
+  margin-bottom: 6px;
+}
+
+.ok {
+  color: #4caf50;
+  margin-top: 6px;
   }
