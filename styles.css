@@ -1,110 +1,110 @@
+/* ===== RESET ===== */
 * {
   box-sizing: border-box;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont;
+  margin: 0;
+  padding: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
 body {
-  margin: 0;
-  background: #0e0e0e;
-  color: #fff;
+  background: #0b0b0b;
+  color: #ffffff;
+  min-height: 100vh;
 }
 
+/* ===== CONTENEDOR APP ===== */
 .app {
   max-width: 420px;
-  margin: auto;
+  margin: 0 auto;
   padding: 16px;
-  padding-bottom: 140px; /* ⬅ espacio reservado para el panel */
 }
 
+/* ===== CABECERA ===== */
 .header {
   text-align: center;
-  margin-bottom: 16px;
+  margin-bottom: 24px;
 }
 
-#timer {
-  font-size: 42px;
-  font-weight: bold;
-  margin-top: 8px;
+#clientName {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 6px;
 }
 
-.grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 10px;
+#activityName {
+  opacity: 0.7;
   margin-bottom: 12px;
 }
 
-.activities {
-  grid-template-columns: repeat(2, 1fr);
+#timer {
+  font-size: 48px;
+  font-weight: 700;
+  letter-spacing: 1px;
 }
 
+/* ===== BOTONES GENERALES ===== */
 button {
   background: #2a2a2a;
-  color: white;
   border: none;
+  color: white;
+  padding: 14px 12px;
   border-radius: 14px;
-  padding: 14px;
   font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
 }
 
-button:active {
-  transform: scale(0.97);
+/* ===== ACTIVIDADES (3 + 2) ===== */
+.activities {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-top: 24px;
 }
 
-button.selected {
-  background: #178bff;
+.activities .activity:nth-child(4),
+.activities .activity:nth-child(5) {
+  grid-column: span 1;
 }
 
-.panel {
-  position: fixed;
-  bottom: 12px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: calc(100% - 32px);
-  max-width: 420px;
-
-  background: #1a1a1a;
-  border-radius: 14px;
-  padding: 12px;
-  font-size: 14px;
-
-  z-index: 10;
+.activity.selected {
+  background: #0d6efd;
 }
 
-.panel.success {
-  border-left: 4px solid #4caf50;
+/* ===== CLIENTES (3 botones) ===== */
+.clients {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-top: 18px;
 }
 
-.hidden {
-  display: none;
+/* ===== REPORTES (2 botones) ===== */
+.reports {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-top: 18px;
 }
-/* ==== FIX PANEL INFERIOR ==== */
 
-.app {
-  padding-bottom: 160px !important;
-}
-
-#closePanel {
-  position: fixed;
-  bottom: 12px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: calc(100% - 24px);
-  max-width: 420px;
-
-  background: #1c1c1c;
-  border-radius: 14px;
+/* ===== PANEL INFERIOR ===== */
+.info-panel {
+  margin-top: 20px;
   padding: 14px;
-
-  box-shadow: 0 8px 30px rgba(0,0,0,0.6);
-  z-index: 9999;
+  background: #1b1b1b;
+  border-radius: 14px;
+  border-left: 6px solid #2ecc71;
+  font-size: 14px;
+  line-height: 1.4;
 }
 
-#closePanel.hidden {
+.info-panel.hidden {
   display: none;
 }
 
-#closePanel.success {
-  border-left: 4px solid #4caf50;
-}
-
+.info-panel .ok {
+  color: #2ecc71;
+  font-weight: 600;
+  }
