@@ -78,4 +78,33 @@ button.selected {
 .hidden {
   display: none;
 }
+/* ==== FIX PANEL INFERIOR ==== */
+
+.app {
+  padding-bottom: 160px !important;
+}
+
+#closePanel {
+  position: fixed;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% - 24px);
+  max-width: 420px;
+
+  background: #1c1c1c;
+  border-radius: 14px;
+  padding: 14px;
+
+  box-shadow: 0 8px 30px rgba(0,0,0,0.6);
+  z-index: 9999;
+}
+
+#closePanel.hidden {
+  display: none;
+}
+
+#closePanel.success {
+  border-left: 4px solid #4caf50;
+}
 
