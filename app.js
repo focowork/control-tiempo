@@ -6,42 +6,62 @@ import {
   getCurrentState
 } from "./timeEngine.js";
 
+/* ===============================
+   CONFIGURACIÓN INICIAL
+================================ */
+
+// Etiquetas visibles
+const ACTIVITY_LABELS = {
+  trabajo: "Trabajo",
+  telefono: "Teléfono",
+  cliente: "Cliente",
+  estudio: "Visitando",
+  otros: "Otros"
+};
+
+// Pedir nombre trabajador SOLO la primera vez
+function getWorkerName() {
+  let name = localStorage.getItem("focowork_worker_name");
+
+  if (!name) {
+    name = prompt(
+      "Nombre del trabajador:\n(se usará en los reportes)"
+    );
+    if (!name) name = "trabajador";
+    localStorage.setItem("focowork_worker_name", name.trim());
+  }
+  return name.trim();
+}
+
+const WORKER_NAME = getWorkerName();
+
+// Para nombres de archivo seguros
+function safeName(str) {
+  return str
+    .toLowerCase()
+    .replace(/\s+/g, "_")
+    .replace(/[^a-z0-9_]/g, "");
+}
+
+// Formato tiempo hh:mm:ss
+function formatTime(ms) {
+  const s = Math.floor(ms / 1000);
+  const h = String(Math.floor(s / 3600)).padStart(2, "0");
+  const m = String(Math.floor((s % 3600) / 60)).padStart(2, "0");
+  const sec = String(s % 60).padStart(2, "0");
+  return `${h}:${m}:${sec}`;
+}
+
+/* ===============================
+   DOM
+================================ */
+
 document.addEventListener("DOMContentLoaded", () => {
-
-  /* ===== TEXTOS ===== */
-  const ACTIVITY_LABELS = {
-    trabajo: "Trabajo",
-    telefono: "Teléfono",
-    cliente: "Cliente",
-    estudio: "Visitando",
-    otros: "Otros"
-  };
-
-  /* ===== TRABAJADOR (SE CONFIGURA UNA VEZ) ===== */
-  function getWorkerName() {
-    let name = localStorage.getItem("focowork_worker_name");
-    if (!name) {
-      name = prompt("Nombre del trabajador:\n(se usará en los reportes)");
-      if (!name) name = "trabajador";
-      localStorage.setItem("focowork_worker_name", name.trim());
-    }
-    return name.trim();
-  }
-
-  function safeName(str) {
-    return str
-      .toLowerCase()
-      .replace(/\s+/g, "_")
-      .replace(/[^a-z0-9_]/g, "");
-  }
-
-  const WORKER_NAME = getWorkerName();
-
-  /* ===== ELEMENTOS UI ===== */
   const clientNameEl = document.getElementById("clientName");
   const activityNameEl = document.getElementById("activityName");
   const timerEl = document.getElementById("timer");
   const activityButtons = document.querySelectorAll(".activity");
+  const closePanel = document.getElementById("closePanel");
 
   const focusBtn =
     document.getElementById("focusBtn") ||
@@ -52,18 +72,23 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("dailyReport");
 
   let timerInterval = null;
-  const FOCUS_WINDOW_MS = 90 * 60 * 1000;
 
-  /* ===== UTIL ===== */
-  function formatTime(ms) {
-    const s = Math.floor(ms / 1000);
-    const h = String(Math.floor(s / 3600)).padStart(2, "0");
-    const m = String(Math.floor((s % 3600) / 60)).padStart(2, "0");
-    const sec = String(s % 60).padStart(2, "0");
-    return `${h}:${m}:${sec}`;
+  /* ===============================
+     UI
+  ================================ */
+
+  function clearSelection() {
+    activityButtons.forEach(b => b.classList.remove("selected"));
   }
 
-  /* ===== TOTAL TIEMPO CLIENTE ===== */
+  function selectActivity(act) {
+    clearSelection();
+    const btn = document.querySelector(
+      `.activity[data-activity="${act}"]`
+    );
+    if (btn) btn.classList.add("selected");
+  }
+
   function calculateClientTotal(clientId) {
     const { blocks } = getCurrentState();
     const now = Date.now();
@@ -77,26 +102,15 @@ document.addEventListener("DOMContentLoaded", () => {
     return total;
   }
 
-  /* ===== UI ===== */
-  function clearSelection() {
-    activityButtons.forEach(b => b.classList.remove("selected"));
-  }
-
-  function selectActivity(act) {
-    clearSelection();
-    const btn = document.querySelector(
-      `.activity[data-activity="${act}"]`
-    );
-    if (btn) btn.classList.add("selected");
-  }
-
   function updateUI(lastActivity = null) {
     const { state, clients } = getCurrentState();
     const client = clients.find(c => c.id === state.currentClientId);
 
-    clientNameEl.textContent = client
-      ? `Cliente: ${client.nombre}`
-      : "Sin cliente activo";
+    if (client) {
+      clientNameEl.textContent = `Cliente: ${client.nombre}`;
+    } else {
+      clientNameEl.textContent = "Sin cliente activo";
+    }
 
     activityNameEl.textContent = lastActivity
       ? `Actividad: ${ACTIVITY_LABELS[lastActivity]}`
@@ -115,7 +129,24 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  /* ===== ACTIVIDADES ===== */
+  function showClosePanel(cliente, totalMs) {
+    if (!closePanel) return;
+
+    closePanel.innerHTML = `
+      <strong>✔ Cliente cerrado</strong><br>
+      Cliente: ${cliente}<br>
+      Tiempo total: ${formatTime(totalMs)}<br><br>
+      <span style="color:#4caf50">
+        Tiempo listo para facturación
+      </span>
+    `;
+    closePanel.style.display = "block";
+  }
+
+  /* ===============================
+     ACTIVIDADES
+  ================================ */
+
   activityButtons.forEach(btn => {
     btn.addEventListener("click", () => {
       const { state } = getCurrentState();
@@ -128,7 +159,10 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  /* ===== CLIENTES ===== */
+  /* ===============================
+     CLIENTES
+  ================================ */
+
   document.getElementById("newClient")?.addEventListener("click", () => {
     const n = prompt("Nombre cliente:");
     if (!n) return;
@@ -136,6 +170,7 @@ document.addEventListener("DOMContentLoaded", () => {
     newClient(n.trim());
     changeActivity("trabajo");
     selectActivity("trabajo");
+    if (closePanel) closePanel.style.display = "none";
     updateUI("trabajo");
   });
 
@@ -152,21 +187,41 @@ document.addEventListener("DOMContentLoaded", () => {
     changeClient(open[sel].id);
     changeActivity("trabajo");
     selectActivity("trabajo");
+    if (closePanel) closePanel.style.display = "none";
     updateUI("trabajo");
   });
 
   document.getElementById("closeClient")?.addEventListener("click", () => {
+    const { state, clients, blocks } = getCurrentState();
+    if (!state.currentClientId) return;
+
+    const client = clients.find(c => c.id === state.currentClientId);
+    if (!client) return;
+
+    const now = Date.now();
+    let total = 0;
+
+    blocks.forEach(b => {
+      if (b.cliente_id === client.id) {
+        total += (b.fin ?? now) - b.inicio;
+      }
+    });
+
     closeClient();
     clearSelection();
     updateUI(null);
+    showClosePanel(client.nombre, total);
   });
 
-  /* ===== 🎯 ENFOQUE (90 min reales) ===== */
+  /* ===============================
+     🎯 ENFOQUE (90 min)
+  ================================ */
+
   if (focusBtn) {
     focusBtn.addEventListener("click", () => {
       const { blocks } = getCurrentState();
       const now = Date.now();
-      const start = now - FOCUS_WINDOW_MS;
+      const start = now - 90 * 60 * 1000;
 
       const totals = {
         trabajo: 0,
@@ -199,94 +254,58 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  /* ===== 📅 REPORTE DIARIO RESUMIDO (CSV PROFESIONAL) ===== */
-if (todayBtn) {
-  todayBtn.addEventListener("click", () => {
-    const { blocks, clients } = getCurrentState();
-    const now = new Date();
+  /* ===============================
+     📊 REPORTE CSV (Excel)
+  ================================ */
 
-    const startDay = new Date(
-      now.getFullYear(),
-      now.getMonth(),
-      now.getDate()
-    ).getTime();
+  if (todayBtn) {
+    todayBtn.addEventListener("click", () => {
+      const { blocks, clients } = getCurrentState();
+      const now = new Date();
+      const dateStr = now.toISOString().slice(0, 10);
 
-    // estructura: cliente -> actividad -> ms
-    const data = {};
-
-    blocks.forEach(b => {
-      const s = Math.max(b.inicio, startDay);
-      const e = Math.min(b.fin ?? Date.now(), Date.now());
-      if (e <= s) return;
-
-      const client = clients.find(c => c.id === b.cliente_id);
-      if (!client) return;
-
-      if (!data[client.nombre]) {
-        data[client.nombre] = {
-          trabajo: 0,
-          telefono: 0,
-          cliente: 0,
-          estudio: 0,
-          otros: 0
-        };
-      }
-
-      data[client.nombre][b.actividad] += e - s;
-    });
-
-    let rows = [];
-    rows.push([
-      "Fecha",
-      "Trabajador",
-      "Cliente",
-      "Trabajo",
-      "Teléfono",
-      "Visitando",
-      "Otros",
-      "TOTAL"
-    ].join(","));
-
-    Object.entries(data).forEach(([cliente, acts]) => {
-      const total =
-        acts.trabajo +
-        acts.telefono +
-        acts.estudio +
-        acts.otros +
-        acts.cliente;
-
+      const rows = [];
       rows.push([
-        now.toISOString().slice(0, 10),
-        WORKER_NAME,
-        cliente,
-        formatTime(acts.trabajo),
-        formatTime(acts.telefono),
-        formatTime(acts.estudio),
-        formatTime(acts.otros),
-        formatTime(total)
-      ].join(","));
+        "Fecha",
+        "Trabajador",
+        "Cliente",
+        "Actividad",
+        "Tiempo_segundos",
+        "Tiempo_hhmmss"
+      ]);
+
+      blocks.forEach(b => {
+        const client = clients.find(c => c.id === b.cliente_id);
+        const seconds = Math.floor(
+          ((b.fin ?? Date.now()) - b.inicio) / 1000
+        );
+        if (seconds <= 0) return;
+
+        rows.push([
+          dateStr,
+          WORKER_NAME,
+          client ? client.nombre : "—",
+          ACTIVITY_LABELS[b.actividad],
+          seconds,
+          formatTime(seconds * 1000)
+        ]);
+      });
+
+      const csv = rows.map(r => r.join(";")).join("\n");
+      const blob = new Blob([csv], {
+        type: "text/csv;charset=utf-8;"
+      });
+
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `focowork-${safeName(WORKER_NAME)}-${dateStr}.csv`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
     });
-
-    const csv = rows.join("\n");
-    const blob = new Blob([csv], {
-      type: "text/csv;charset=utf-8;"
-    });
-
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-
-    a.href = url;
-    a.download = `focowork-resumen-${safeName(WORKER_NAME)}-${now
-      .toISOString()
-      .slice(0, 10)}.csv`;
-
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-
-    setTimeout(() => URL.revokeObjectURL(url), 1000);
-  });
-      }
+  }
 
   updateUI();
 });
