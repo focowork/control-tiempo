@@ -13,6 +13,7 @@ body {
   max-width: 420px;
   margin: auto;
   padding: 16px;
+  padding-bottom: 140px; /* ⬅ espacio reservado para el panel */
 }
 
 .header {
@@ -55,11 +56,19 @@ button.selected {
 }
 
 .panel {
-  margin-top: 12px;
+  position: fixed;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% - 32px);
+  max-width: 420px;
+
   background: #1a1a1a;
-  border-radius: 12px;
+  border-radius: 14px;
   padding: 12px;
   font-size: 14px;
+
+  z-index: 10;
 }
 
 .panel.success {
@@ -69,3 +78,4 @@ button.selected {
 .hidden {
   display: none;
 }
+
