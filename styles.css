@@ -1,116 +1,45 @@
-* {
-  box-sizing: border-box;
-}
 
 body {
-  margin: 0;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-  background: radial-gradient(circle at top, #2b2b2b, #0f0f0f);
-  color: #fff;
+  background:#111;
+  color:#fff;
+  font-family: system-ui, sans-serif;
+  margin:0;
+  padding:20px;
 }
-
-/* ===== CONTENEDOR PRINCIPAL ===== */
 .app {
-  max-width: 420px;
-  margin: 0 auto;
-  padding: 18px 16px 28px;
+  max-width:420px;
+  margin:auto;
 }
-
-/* ===== CABECERA ===== */
-h1 {
-  margin: 8px 0 6px;
-  font-size: 22px;
-  text-align: center;
+#timer {
+  font-size:48px;
+  margin:20px 0;
 }
-
-.subtitle {
-  text-align: center;
-  opacity: 0.6;
-  margin-bottom: 10px;
+.grid {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+  margin-bottom:12px;
 }
-
-/* ===== TIMER ===== */
-.timer {
-  text-align: center;
-  font-size: 46px;
-  font-weight: 700;
-  margin: 10px 0 22px;
-}
-
-/* ===== BOTONES BASE ===== */
 button {
-  background: #2b2b2b;
-  color: #fff;
-  border: none;
-  border-radius: 18px;
-  padding: 16px 14px;
-  font-size: 16px;
-  cursor: pointer;
-  transition: background 0.2s ease, transform 0.1s ease;
+  padding:16px;
+  border-radius:14px;
+  border:none;
+  background:#2a2a2a;
+  color:white;
+  font-size:16px;
 }
-
-button:active {
-  transform: scale(0.97);
+#message {
+  margin-top:16px;
+  padding:12px;
+  background:#2ecc71;
+  color:#000;
+  border-radius:12px;
+  display:none;
 }
-
-button.selected {
-  background: #0a84ff;
+#trialBox {
+  margin-top:16px;
+  padding:12px;
+  border:1px dashed #555;
+  border-radius:12px;
+  text-align:center;
 }
-
-/* ===== ACTIVIDADES ===== */
-.activities {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 14px;
-  margin-bottom: 22px;
-}
-
-.activities .otros {
-  grid-column: 1 / -1;
-}
-
-/* ===== CLIENTES ===== */
-.clients {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
-  margin-bottom: 22px;
-}
-
-/* ===== TOOLS ===== */
-.tools {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 14px;
-  margin-bottom: 22px;
-}
-
-/* ===== PANEL CLIENTE CERRADO ===== */
-.close-panel {
-  margin-top: 18px;
-  padding: 16px;
-  border-radius: 16px;
-  background: #1f1f1f;
-  border-left: 4px solid #2ecc71;
-}
-
-.close-panel h3 {
-  margin: 0 0 6px;
-  font-size: 16px;
-}
-
-.close-panel p {
-  margin: 4px 0;
-  font-size: 14px;
-}
-
-.close-panel .ok {
-  color: #2ecc71;
-  font-weight: 600;
-  margin-top: 6px;
-}
-
-/* ===== OCULTO ===== */
-.hidden {
-  display: none;
-  }

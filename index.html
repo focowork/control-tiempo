@@ -1,54 +1,45 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>FocoWork</title>
-  <link rel="stylesheet" href="styles.css" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FocoWork</title>
+<link rel="manifest" href="manifest.json">
+<link rel="stylesheet" href="styles.css">
 </head>
-
 <body>
-  <div class="app">
+<div class="app">
+  <h1 id="status">Sin cliente activo</h1>
+  <div id="timer">00:00:00</div>
 
-    <!-- CABECERA -->
-    <h1 id="clientName">Sin cliente activo</h1>
-    <div class="subtitle" id="activityName">—</div>
-
-    <!-- TIMER -->
-    <div class="timer" id="timer">00:00:00</div>
-
-    <!-- ACTIVIDADES -->
-    <div class="activities">
-      <button class="activity" data-activity="trabajo">📘 Trabajo</button>
-      <button class="activity" data-activity="telefono">📞 Teléfono</button>
-      <button class="activity" data-activity="cliente">👥 Cliente</button>
-      <button class="activity" data-activity="estudio">📖 Visitando</button>
-      <button class="activity otros" data-activity="otros">⚙️ Otros</button>
-    </div>
-
-    <!-- CLIENTES -->
-    <div class="clients">
-      <button id="newClient">➕ Nuevo</button>
-      <button id="changeClient">🔁 Cambiar</button>
-      <button id="closeClient">✅ Cerrar</button>
-    </div>
-
-    <!-- TOOLS -->
-    <div class="tools">
-      <button id="focusBtn">🎯 Enfoque</button>
-      <button id="todayBtn">📅 Hoy</button>
-    </div>
-
-    <!-- PANEL CLIENTE CERRADO -->
-    <div id="closePanel" class="close-panel hidden">
-      <h3>✔ Cliente cerrado</h3>
-      <p id="closeClientName"></p>
-      <p id="closeClientTime"></p>
-      <div class="ok">Tiempo listo para facturación</div>
-    </div>
-
+  <div class="grid activities">
+    <button onclick="setActivity('Trabajo')">🟦 Trabajo</button>
+    <button onclick="setActivity('Teléfono')">📞 Teléfono</button>
+    <button onclick="setActivity('Cliente')">👥 Cliente</button>
+    <button onclick="setActivity('Visitando')">📘 Visitando</button>
+    <button onclick="setActivity('Otros')">⚙️ Otros</button>
   </div>
 
-  <script type="module" src="app.js"></script>
+  <div class="grid">
+    <button onclick="newClient()">➕ Nuevo</button>
+    <button onclick="closeClient()">✅ Cerrar</button>
+    <button onclick="downloadReport()">📄 Reporte</button>
+  </div>
+
+  <div id="trialBox">
+    <p>🔒 Versión de prueba (máx. 2 clientes)</p>
+    <button onclick="activate()">🔓 Activar versión completa</button>
+  </div>
+
+  <div id="message"></div>
+</div>
+
+<script src="app.js"></script>
+<script>
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('service-worker.js');
+}
+</script>
 </body>
-        </html>
+</html>

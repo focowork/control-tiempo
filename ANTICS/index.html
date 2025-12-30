@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FocoWork</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+  <div class="app">
+
+    <!-- CABECERA -->
+    <h1 id="clientName">Sin cliente activo</h1>
+    <div class="subtitle" id="activityName">—</div>
+
+    <!-- TIMER -->
+    <div class="timer" id="timer">00:00:00</div>
+
+    <!-- ACTIVIDADES -->
+    <div class="activities">
+      <button class="activity" data-activity="trabajo">📘 Trabajo</button>
+      <button class="activity" data-activity="telefono">📞 Teléfono</button>
+      <button class="activity" data-activity="cliente">👥 Cliente</button>
+      <button class="activity" data-activity="estudio">📖 Visitando</button>
+      <button class="activity otros" data-activity="otros">⚙️ Otros</button>
+    </div>
+
+    <!-- CLIENTES -->
+    <div class="clients">
+      <button id="newClient">➕ Nuevo</button>
+      <button id="changeClient">🔁 Cambiar</button>
+      <button id="closeClient">✅ Cerrar</button>
+    </div>
+
+    <!-- TOOLS -->
+    <div class="tools">
+      <button id="focusBtn">🎯 Enfoque</button>
+      <button id="todayBtn">📅 Hoy</button>
+    </div>
+
+    <!-- PANEL CLIENTE CERRADO -->
+    <div id="closePanel" class="close-panel hidden">
+      <h3>✔ Cliente cerrado</h3>
+      <p id="closeClientName"></p>
+      <p id="closeClientTime"></p>
+      <div class="ok">Tiempo listo para facturación</div>
+    </div>
+
+  </div>
+
+  <script type="module" src="app.js"></script>
+</body>
+        </html>
