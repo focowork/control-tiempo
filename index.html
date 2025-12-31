@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>FocoWork</title>
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
@@ -12,44 +12,36 @@
 
     <!-- CABECERA -->
     <h1 id="clientName">Sin cliente activo</h1>
-    <div class="subtitle" id="activityName">—</div>
+    <div id="activityName">—</div>
 
     <!-- TIMER -->
-    <div class="timer" id="timer">00:00:00</div>
+    <div id="timer">00:00:00</div>
 
-    <!-- ACTIVIDADES -->
-    <div class="activities">
-      <button id="btnTrabajo">🟦 Trabajo</button>
-      <button id="btnTelefono">📞 Teléfono</button>
-      <button id="btnCliente">👥 Cliente</button>
-      <button id="btnVisitando">📘 Visitando</button>
-      <button id="btnOtros" class="full">⚙️ Otros</button>
+    <!-- ACTIVIDADES (CLAVE: class="activity" + data-activity) -->
+    <div class="grid">
+      <button class="activity" data-activity="trabajo">🟦 Trabajo</button>
+      <button class="activity" data-activity="telefono">📞 Teléfono</button>
+      <button class="activity" data-activity="cliente">👥 Cliente</button>
+      <button class="activity" data-activity="estudio">📘 Visitando</button>
+      <button class="activity" data-activity="otros">⚙️ Otros</button>
     </div>
 
     <!-- CLIENTES -->
-    <div class="clients">
-      <button id="btnNuevo">➕ Nuevo</button>
-      <button id="btnCambiar">🔁 Cambiar</button>
-      <button id="btnCerrar">✅ Cerrar</button>
+    <div class="grid">
+      <button id="newClient">➕ Nuevo</button>
+      <button id="changeClient">🔁 Cambiar</button>
+      <button id="closeClient">✅ Cerrar</button>
     </div>
 
     <!-- UTILIDADES -->
-    <div class="tools">
-      <button id="btnEnfoque">🎯 Enfoque</button>
-      <button id="btnReporte">📄 Reporte</button>
-    </div>
-
-    <!-- MENSAJES -->
-    <div id="statusBox"></div>
-
-    <!-- BLOQUE VERSIÓN PRUEBA -->
-    <div id="trialBox">
-      🔒 Versión de prueba (máx. 2 clientes)
-      <button id="btnUpgrade">🔓 Activar versión completa</button>
+    <div class="grid">
+      <button id="focusBtn">🎯 Enfoque</button>
+      <button id="todayBtn">📄 Reporte</button>
     </div>
 
   </div>
 
-  <script src="app.js"></script>
+  <!-- IMPORTANTE: app.js debe existir y cargarse -->
+  <script type="module" src="app.js"></script>
 </body>
-  </html>
+        </html>
