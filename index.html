@@ -1,20 +1,23 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>FocoWork</title>
-  <link rel="stylesheet" href="styles.css?v=1">
+  <link rel="stylesheet" href="styles.css" />
 </head>
-<body>
 
+<body>
   <div class="app">
 
-    <h1 id="clientName">Sin cliente activo</h1>
-    <div id="activityName">—</div>
-    <div id="timer">00:00:00</div>
+    <div class="header">
+      <div id="clientName">Sin cliente activo</div>
+      <div id="activityName">—</div>
+      <div id="timer">00:00:00</div>
+    </div>
 
-    <div class="grid">
+    <!-- ACTIVIDADES -->
+    <div class="grid activities">
       <button class="activity" data-activity="trabajo">🟦 Trabajo</button>
       <button class="activity" data-activity="telefono">📞 Teléfono</button>
       <button class="activity" data-activity="cliente">👥 Cliente</button>
@@ -22,19 +25,28 @@
       <button class="activity" data-activity="otros">⚙️ Otros</button>
     </div>
 
-    <div class="grid">
+    <!-- CLIENTES -->
+    <div class="grid actions">
       <button id="newClient">➕ Nuevo</button>
-      <button id="changeClient">🔁 Cambiar</button>
+      <button id="changeClient">🔄 Cambiar</button>
       <button id="closeClient">✅ Cerrar</button>
     </div>
 
-    <div class="grid">
+    <!-- REPORTES -->
+    <div class="grid reports">
       <button id="focusBtn">🎯 Enfoque</button>
-      <button id="todayBtn">📄 Reporte</button>
+      <button id="todayBtn">📅 Hoy</button>
+    </div>
+
+    <!-- PANEL INFERIOR -->
+    <div id="infoPanel" class="info-panel hidden">
+      <div id="infoTitle">Cliente cerrado</div>
+      <div id="infoText"></div>
+      <div class="ok">✔ Tiempo listo para facturación</div>
     </div>
 
   </div>
 
-  <script type="module" src="app.js?v=1"></script>
+  <script type="module" src="app.js"></script>
 </body>
-</html>
+  </html>
