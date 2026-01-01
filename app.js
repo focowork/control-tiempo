@@ -16,7 +16,6 @@ document.addEventListener("DOMContentLoaded", () => {
     otros: "Otros"
   };
 
-  /* ===== TRABAJADOR ===== */
   function getWorkerName() {
     let name = localStorage.getItem("focowork_worker_name");
     if (!name) {
@@ -33,7 +32,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const WORKER_NAME = getWorkerName();
 
-  /* ===== UI ===== */
   const clientNameEl = document.getElementById("clientName");
   const activityNameEl = document.getElementById("activityName");
   const timerEl = document.getElementById("timer");
@@ -48,7 +46,6 @@ document.addEventListener("DOMContentLoaded", () => {
   let timerInterval = null;
   const FOCUS_WINDOW_MS = 90 * 60 * 1000;
 
-  /* ===== UTIL ===== */
   function formatTime(ms) {
     const s = Math.floor(ms / 1000);
     const h = String(Math.floor(s / 3600)).padStart(2, "0");
@@ -105,7 +102,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  /* ===== ACTIVIDADES ===== */
   activityButtons.forEach(btn => {
     btn.addEventListener("click", () => {
       const { state } = getCurrentState();
@@ -118,7 +114,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  /* ===== CLIENTES ===== */
   document.getElementById("newClient").onclick = () => {
     const n = prompt("Nombre cliente:");
     if (!n) return;
@@ -162,7 +157,6 @@ document.addEventListener("DOMContentLoaded", () => {
     updateUI(null);
   };
 
-  /* ===== 🎯 ENFOQUE REAL ===== */
   focusBtn.onclick = () => {
     const { blocks } = getCurrentState();
     const now = Date.now();
@@ -198,7 +192,6 @@ document.addEventListener("DOMContentLoaded", () => {
     alert(msg);
   };
 
-  /* ===== 📅 REPORTE DIARIO REAL ===== */
   todayBtn.onclick = () => {
     const { blocks } = getCurrentState();
     const now = new Date();
@@ -225,24 +218,32 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const totalDay = Object.values(totals).reduce((a, b) => a + b, 0);
 
-    let txt = `REPORTE DIARIO - FocoWork\n`;
-    txt += `Trabajador: ${WORKER_NAME}\n`;
-    txt += `Fecha: ${now.toLocaleDateString()}\n\n`;
+    const filas = [
+      ["Fecha", now.toISOString().slice(0, 10)],
+      ["Trabajador", WORKER_NAME],
+      [],
+      ["Actividad", "Tiempo (HH:MM:SS)"]
+    ];
 
     Object.entries(totals).forEach(([a, t]) => {
-      txt += `${ACTIVITY_LABELS[a]}: ${formatTime(t)}\n`;
+      filas.push([ACTIVITY_LABELS[a], formatTime(t)]);
     });
 
-    txt += `\nTOTAL: ${formatTime(totalDay)}\n`;
+    filas.push([]);
+    filas.push(["TOTAL", formatTime(totalDay)]);
 
-    const blob = new Blob([txt], { type: "text/plain;charset=utf-8" });
+    const csv = filas
+      .map(fila => fila.map(v => `"${v}"`).join(","))
+      .join("\n");
+
+    const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
     const url = URL.createObjectURL(blob);
 
     const a = document.createElement("a");
     a.href = url;
     a.download = `focowork-${safeName(WORKER_NAME)}-${now
       .toISOString()
-      .slice(0, 10)}.txt`;
+      .slice(0, 10)}.csv`;
 
     document.body.appendChild(a);
     a.click();
