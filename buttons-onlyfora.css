@@ -1,0 +1,118 @@
+/* ===============================
+   BOTONES - SOBRESCRITURA FORZADA
+   COLGAR ESTE ARCHIVO AL FINAL DE TODOS LOS CSS
+   =============================== */
+
+/* ⚠️ IMPORTANTE: Añadir ?v=3 al final del enlace para forzar recarga
+   <link rel="stylesheet" href="buttons-only.css?v=3">
+*/
+
+/* Paleta de colores */
+:root {
+  --coral-start: #FF6B6B;
+  --coral-end: #FF8E53;
+  --turquoise-start: #4ECDC4;
+  --turquoise-end: #44A08D;
+}
+
+/* ===============================
+   SOBRESCRIBIR TODOS LOS BOTONES DEL GRID
+   =============================== */
+
+/* Selector súper específico para el botón "Nou encàrrec" */
+.grid.centered button:first-child,
+#clientMainButtons button:first-child,
+button[id*="new"],
+button[id*="New"],
+#newClientBtn,
+#newClient {
+  background: linear-gradient(135deg, #FF6B6B, #FF8E53) !important;
+  color: #ffffff !important;
+  border: 2px solid rgba(255, 107, 107, 0.6) !important;
+  box-shadow: 0 8px 25px rgba(255, 107, 107, 0.4) !important;
+  font-weight: 700 !important;
+  animation: none !important;
+  position: relative !important;
+  overflow: hidden !important;
+}
+
+.grid.centered button:first-child:hover,
+#clientMainButtons button:first-child:hover,
+button[id*="new"]:hover,
+button[id*="New"]:hover,
+#newClientBtn:hover,
+#newClient:hover {
+  background: linear-gradient(135deg, #FF8E53, #FF6B6B) !important;
+  border-color: rgba(255, 107, 107, 0.8) !important;
+  box-shadow: 0 12px 35px rgba(255, 107, 107, 0.6) !important;
+  transform: translateY(-3px) !important;
+}
+
+/* Selector súper específico para el botón "Revisar encàrrecs" */
+.grid.centered button:last-child,
+#clientMainButtons button:last-child,
+button[id*="focus"],
+button[id*="Focus"],
+button[id*="priority"],
+button[id*="Priority"],
+#focusPriorityBtn {
+  background: linear-gradient(135deg, #4ECDC4, #44A08D) !important;
+  color: #ffffff !important;
+  border: 2px solid rgba(78, 205, 196, 0.6) !important;
+  box-shadow: 0 8px 25px rgba(78, 205, 196, 0.4) !important;
+  font-weight: 700 !important;
+  position: relative !important;
+  overflow: hidden !important;
+}
+
+.grid.centered button:last-child:hover,
+#clientMainButtons button:last-child:hover,
+button[id*="focus"]:hover,
+button[id*="Focus"]:hover,
+button[id*="priority"]:hover,
+button[id*="Priority"]:hover,
+#focusPriorityBtn:hover {
+  background: linear-gradient(135deg, #44A08D, #4ECDC4) !important;
+  border-color: rgba(78, 205, 196, 0.8) !important;
+  box-shadow: 0 12px 35px rgba(78, 205, 196, 0.6) !important;
+  transform: translateY(-3px) !important;
+}
+
+/* ===============================
+   CLASE PRIMARY (por si acaso)
+   =============================== */
+button.primary,
+.primary {
+  background: linear-gradient(135deg, #4ECDC4, #44A08D) !important;
+  color: #ffffff !important;
+  border: 2px solid rgba(78, 205, 196, 0.6) !important;
+  box-shadow: 0 8px 25px rgba(78, 205, 196, 0.4) !important;
+}
+
+button.primary:hover,
+.primary:hover {
+  background: linear-gradient(135deg, #44A08D, #4ECDC4) !important;
+  box-shadow: 0 12px 35px rgba(78, 205, 196, 0.6) !important;
+  transform: translateY(-3px) !important;
+}
+
+/* ===============================
+   EFECTO DE BRILLO (común para todos)
+   =============================== */
+.grid.centered button::before,
+#clientMainButtons button::before {
+  content: "" !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: -100% !important;
+  width: 100% !important;
+  height: 100% !important;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent) !important;
+  transition: left 0.7s ease !important;
+  pointer-events: none !important;
+}
+
+.grid.centered button:hover::before,
+#clientMainButtons button:hover::before {
+  left: 100% !important;
+}

@@ -1,9 +1,30 @@
 {
-  "name": "FocoWork",
-  "short_name": "FocoWork",
-  "start_url": "index.html",
+  "name": "FocusWork",
+  "short_name": "FocusWork",
+  "description": "Control de temps i gestió de clients",
+  "lang": "ca",
+  "start_url": "/FOCUSWORK/",
+  "scope": "/FOCUSWORK/",
   "display": "standalone",
-  "background_color": "#111",
-  "theme_color": "#111",
-  "icons": []
+  "orientation": "portrait",
+  "background_color": "#0f172a",
+  "theme_color": "#0f172a",
+  "icons": [
+    {
+      "src": "/FOCUSWORK/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/FOCUSWORK/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "/FOCUSWORK/icons/icon-512-maskable.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
 }
